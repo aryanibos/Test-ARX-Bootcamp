@@ -1,59 +1,145 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Soal Nomor 5 - Laravel Register, Login, dan CMS User
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Project ini adalah aplikasi **Register, Login, dan CMS User sederhana** menggunakan Laravel.
 
-## About Laravel
+## Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Login user menggunakan AJAX.
+- CRUD user menggunakan AJAX.
+- Upload image profile.
+- List user menggunakan jQuery DataTables server-side.
+- Pagination 10 data per halaman.
+- Database menggunakan SQLite.
+- Penyimpanan gambar profile di folder `public/profile-images`.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requirement
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Pastikan sudah terinstall:
 
-## Learning Laravel
+- PHP minimal 8.2
+- Composer
+- Browser
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Project ini menggunakan SQLite bawaan Laravel, jadi tidak wajib setup MySQL.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Cara Install dari Awal
 
-## Laravel Sponsors
+Masuk ke folder project:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+cd soal-no5-laravel
+```
 
-### Premium Partners
+Install dependency Laravel:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+composer install
+```
 
-## Contributing
+Copy file environment:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+copy .env.example .env
+```
 
-## Code of Conduct
+Generate application key:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+php artisan key:generate
+```
 
-## Security Vulnerabilities
+Buat file database SQLite jika belum ada:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+type nul > database\database.sqlite
+```
 
-## License
+Jalankan migration dan seeder:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan migrate:fresh --seed
+```
+
+Buat folder penyimpanan image profile jika belum ada:
+
+```bash
+mkdir public\profile-images
+```
+
+Jalankan server Laravel:
+
+```bash
+php artisan serve
+```
+
+Buka aplikasi di browser:
+
+```text
+http://127.0.0.1:8000/login
+```
+
+## Akun Login Awal
+
+Gunakan akun berikut untuk login pertama kali:
+
+```text
+Email: arya@gmail.com
+Password: bismillah123
+```
+
+Setelah login, user dapat menambah, mengubah, menghapus, dan melihat list user di halaman CMS User.
+
+## Struktur Penyimpanan Gambar
+
+Image profile disimpan di:
+
+```text
+public/profile-images
+```
+
+Contoh URL gambar:
+
+```text
+http://127.0.0.1:8000/profile-images/nama-file.jpg
+```
+
+## Perintah Penting
+
+Menjalankan migration ulang dan mengisi akun awal:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+Menjalankan test:
+
+```bash
+php artisan test
+```
+
+Menjalankan format check:
+
+```bash
+vendor\bin\pint --test
+```
+
+Menjalankan server:
+
+```bash
+php artisan serve
+```
+
+## Catatan
+
+- Semua proses create, update, delete, dan login menggunakan AJAX request.
+- Email user harus unique.
+- Password wajib diisi saat membuat user baru.
+- Saat edit user, password boleh dikosongkan jika tidak ingin mengubah password.
+- Ukuran image yang tampil di DataTables adalah 200px x 200px.
+- DataTables menggunakan server-side processing.
+
+## Tentang Laravel
+
+Project ini dibuat menggunakan Laravel. Dokumentasi resmi Laravel dapat dilihat di [laravel.com/docs](https://laravel.com/docs).
+
+Laravel framework adalah open-source software dengan lisensi [MIT](https://opensource.org/licenses/MIT).
