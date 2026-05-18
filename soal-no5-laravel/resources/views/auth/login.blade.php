@@ -1,5 +1,19 @@
 @extends('layouts.app', ['title' => 'Login'])
 
+@push('styles')
+    <style>
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 0;
+            text-decoration: none;
+            border: none;
+        }
+    </style>
+@endpush
+
 @section('content')
 <main class="auth-page">
     <section class="auth-panel">
@@ -13,14 +27,39 @@
 
         <div class="mb-3">
             <label for="loginEmail" class="form-label">Email</label>
-            <input type="email" id="loginEmail" class="form-control" autocomplete="email">
-            <div class="invalid-feedback" data-error-for="email"></div>
+            <input type="text" id="loginEmail" class="form-control" autocomplete="email" value="{{ old('email') }}">
+           @error('email')
+                 <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="mb-4">
             <label for="loginPassword" class="form-label">Password</label>
-            <input type="password" id="loginPassword" class="form-control" autocomplete="current-password">
-            <div class="invalid-feedback" data-error-for="password"></div>
+
+            <div class="position-relative">
+                <input
+                    type="password"
+                    name="password"
+                    id="loginPassword"
+                    class="form-control pe-5 @error('password') is-invalid @enderror"
+                    autocomplete="current-password"
+                >
+
+                <button
+                    type="button"
+                    class="btn btn-link password-toggle"
+                    data-target="#loginPassword"
+                    aria-label="Tampilkan password"
+                >
+                    👁️
+                </button>
+            </div>
+
+            @error('password')
+                <div class="invalid-feedback d-block">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <button type="button" id="loginButton" class="btn btn-primary w-100 icon-button">
@@ -30,6 +69,26 @@
     </section>
 </main>
 @endsection
+
+@push('scripts')
+<script>
+document.querySelectorAll('.password-toggle').forEach(function(button) {
+    button.addEventListener('click', function() {
+        const input = document.querySelector(this.dataset.target);
+
+        if (input.type === 'password') {
+            input.type = 'text';
+            this.textContent = '🙈';
+            this.setAttribute('aria-label', 'Sembunyikan password');
+        } else {
+            input.type = 'password';
+            this.textContent = '👁️';
+            this.setAttribute('aria-label', 'Tampilkan password');
+        }
+    });
+});
+</script>
+@endpush
 
 @push('scripts')
 <script>
