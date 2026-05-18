@@ -1,0 +1,15 @@
+document.querySelectorAll('.password-toggle').forEach(function(button) {
+    button.addEventListener('click', function() {
+        const input = document.querySelector(this.dataset.target);
+
+        if (input.type === 'password') {
+            input.type = 'text';
+            this.textContent = '🙈';
+            this.setAttribute('aria-label', 'Sembunyikan password');
+        } else {
+            input.type = 'password';
+            this.textContent = '👁️';
+            this.setAttribute('aria-label', 'Tampilkan password');
+        }
+    });
+});
